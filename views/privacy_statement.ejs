@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fynn Gnugesser Website</title>
+    <link rel="stylesheet" type="text/css" href="privacy_statement.css" />
+  </head>
+  <body>
+    <%- include ('partials/header.ejs')%>
+
+    <div class="all_content">
+      <%- include ('partials/navbar.ejs')%>
+
+      <div class="main_content">
+        <h2>Privacy Statement</h2>
+        <p>
+          Disclaimer: The information provided on this website is for general
+          informational purposes only. We do not guarantee the accuracy,
+          completeness, or suitability of any information posted by pet owners.
+          We do not sell or misuse user information and take measures to protect
+          your privacy. Users are advised to verify the details and suitability
+          of pets before adoption.
+        </p>
+      </div>
+    </div>
+    <%- include ('partials/footer.ejs')%>
+    <script src="logoutButton.js"></script>
+    <%- include ('partials/logoutCheck.ejs')%>
+  </body>
+</html>

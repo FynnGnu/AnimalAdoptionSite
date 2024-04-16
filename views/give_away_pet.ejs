@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fynn Gnugesser Website</title>
+    <link rel="stylesheet" type="text/css" href="give_away_pet.css" />
+  </head>
+  <body>
+    <%- include ('partials/header.ejs')%>
+    <div class="all_content">
+      <%- include ('partials/navbar.ejs')%>
+
+      <div class="main_content">
+        <% if (isLoggedIn) { %>
+        <h2>Giving Away a Pet Form</h2>
+        <form id="adoptionForm">
+          <label for="type">Cat or Dog:</label>
+          <select id="type" name="type">
+            <option value="">Select an option</option>
+            <option value="cat">Cat</option>
+            <option value="dog">Dog</option>
+          </select>
+          <br />
+          <label for="breed">Breed:</label>
+          <input
+            type="text"
+            id="breed"
+            name="breed"
+            placeholder="Enter breed"
+          />
+          <br />
+
+          <label for="age">Age:</label>
+          <input type="text" id="age" name="age" placeholder="Enter age" />
+          <br />
+
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender">
+            <option value="">Select an option</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <br />
+          <p>Compatibility:</p>
+          <label for="dogComp">Gets along with other dogs</label>
+          <input type="checkbox" id="dogComp" name="dogComp" value="yes" />
+          <br />
+          <label for="catComp">Gets along with other cats</label>
+          <input type="checkbox" id="catComp" name="catComp" value="yes" />
+          <br />
+
+          <label for="kidsComp">Gets Along with Small Children </label>
+          <input type="checkbox" id="kidsComp" name="kidsComp" value="yes" />
+          <br />
+          <p>Comments:</p>
+
+          <textarea id="comments" name="comments" rows="4"></textarea>
+          <br />
+          <p>Owner's Name (First and Last):</p>
+          <input type="text" id="ownerName" name="ownerName" />
+          <br />
+          <p>Owner's Email:</p>
+          <input type="email" id="ownerEmail" name="ownerEmail" />
+          <br />
+          <button type="submit" onclick="addToAvailablePetInfo(event)">
+            Submit
+          </button>
+          <button type="reset">Clear</button>
+          <br /><br />
+          <div id="adoptionFormResponse"></div>
+        </form>
+        <% } else { %>
+        <div id="myModal" class="modal">
+          <div class="modal-content">
+            <h2>Please log in to access this page.</h2>
+            <a href="/login">Log In</a>
+          </div>
+        </div>
+        <script>
+          document.getElementById("myModal").style.display = "block"; // Show the modal
+        </script>
+        <% } %>
+      </div>
+    </div>
+    <%- include ('partials/footer.ejs')%>
+
+    <script src="logoutButton.js"></script>
+    <%- include ('partials/logoutCheck.ejs')%>
+    <script src="formValidator.js"></script>
+    <script src="breeds.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const adoptionForm = document.getElementById("adoptionForm");
+        if (adoptionForm) {
+          adoptionForm.addEventListener("submit", addToAvailablePetInfo);
+        }
+      });
+      function addToAvailablePetInfo(event) {
+        event.preventDefault();
+        const result = validateForm();
+
+        if (result.success == false) {
+          document.getElementById("adoptionFormResponse").innerHTML =
+            result.message;
+          return; // Stop execution if validation failed
+        }
+        const form = document.getElementById("adoptionForm");
+        const type = document.getElementById("type").value;
+        const breed = document.getElementById("breed").value;
+        const age = document.getElementById("age").value;
+        const gender = document.getElementById("gender").value;
+        const dogComp = document.getElementById("dogComp").value;
+        const catComp = document.getElementById("catComp").value;
+        const kidsComp = document.getElementById("kidsComp").value;
+        const comments = document.getElementById("comments").value;
+        const ownerName = document.getElementById("ownerName").value;
+        const ownerEmail = document.getElementById("ownerEmail").value;
+
+        const formData = new FormData(form);
+        const data = {};
+        for (let [key, value] of formData.entries()) {
+          data[key] = value;
+        }
+
+        fetch("/addToAvailablePetInfo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            document.getElementById("adoptionFormResponse").innerHTML =
+              result.message;
+            if (result.success) {
+              form.reset();
+            }
+          });
+      }
+    </script>
+  </body>
+</html>

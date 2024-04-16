@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fynn Gnugesser Website</title>
+    <link rel="stylesheet" type="text/css" href="find_pet.css" />
+  </head>
+  <body>
+    <%- include ('partials/header.ejs')%>
+    <div class="all_content">
+      <%- include ('partials/navbar.ejs')%>
+
+      <div class="main_content">
+        <h2>Pet Search Form</h2>
+        <form id="adoptionForm">
+          <label for="type">Cat or Dog:</label>
+          <select id="type" name="type">
+            <option value="">Select an option</option>
+            <option value="cat">Cat</option>
+            <option value="dog">Dog</option>
+          </select>
+          <br />
+          <label for="breed">Breed:</label>
+          <select id="breed" name="breed">
+            <option value="">Select an option</option>
+            <option value="any">Doesn't Matter</option>
+          </select>
+          <script src="breeds.js"></script>
+          <br />
+          <label for="age">Preferred Age:</label>
+          <select id="age" name="age">
+            <option value="">Select an option</option>
+            <option value="any">Doesn't Matter</option>
+            <option value="young">Young (0-2 years)</option>
+            <option value="adult">Adult (2-8 years)</option>
+            <option value="senior">Senior (8+ years)</option>
+          </select>
+          <br />
+          <label for="gender">Preferred Gender:</label>
+          <select id="gender" name="gender">
+            <option value="">Select an option</option>
+            <option value="any">Doesn't Matter</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <br />
+          <p>Compatibility:</p>
+          <div class="checkbox-group">
+            <label for="dogsComp">Gets Along with Dogs</label>
+            <input
+              type="checkbox"
+              id="dogsComp"
+              name="compatibility"
+              value="dogs"
+            />
+          </div>
+          <div class="checkbox-group">
+            <label for="catsComp">Gets Along with Cats</label>
+            <input
+              type="checkbox"
+              id="catsComp"
+              name="compatibility"
+              value="cats"
+            />
+          </div>
+          <div class="checkbox-group">
+            <label for="kidsComp">Gets Along with Small Children</label>
+            <input
+              type="checkbox"
+              id="kidsComp"
+              name="compatibility"
+              value="children"
+            />
+          </div>
+          <br />
+          <button type="submit">Submit</button>
+          <button type="reset">Clear</button>
+        </form>
+
+        <div id="pets"></div>
+      </div>
+    </div>
+    <%- include ('partials/footer.ejs')%>
+    <script src="logoutButton.js"></script>
+    <%- include ('partials/logoutCheck.ejs')%>
+    <script src="formValidator.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("adoptionForm");
+        const petsDiv = document.getElementById("pets");
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the default form submission
+
+          const result = validateForm(); // Assuming you have a validateForm function
+
+          if (!result.success) {
+            // Display the validation message
+            petsDiv.innerHTML = `<p>${result.message}</p>`;
+            return;
+          }
+
+          const age = document.getElementById("age").value;
+          const ageFilter = {
+            young: age === "young",
+            adult: age === "adult",
+            senior: age === "senior",
+          };
+
+          // Serialize form data
+          const formData = new FormData(form);
+          const data = Object.fromEntries(formData.entries());
+
+          // Manually handle checkboxes
+          const compatibility = {
+            dogs: document.getElementById("dogsComp").checked,
+            cats: document.getElementById("catsComp").checked,
+            children: document.getElementById("kidsComp").checked,
+          };
+
+          // Add compatibility and ageFilter to the data object
+          data.compatibility = compatibility;
+          data.ageFilter = ageFilter;
+
+          // Send a POST request to /findPets
+          fetch("/findPets", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((pets) => {
+              // Clear the pets div
+              petsDiv.innerHTML = "";
+
+              // Check if any pets were found
+              if (pets.length > 0) {
+                pets.forEach((pet) => {
+                  // Now, 'pet' is an object, so you can directly access its properties
+                  const {
+                    breed,
+                    age,
+                    gender,
+                    dogComp,
+                    catComp,
+                    kidsComp,
+                    comments,
+                    ownerName,
+                    ownerEmail,
+                  } = pet;
+
+                  // Create a new div for each pet
+                  const petDiv = document.createElement("div");
+                  petDiv.classList.add("pet");
+
+                  // Add pet information to the div
+                  petDiv.innerHTML = `
+              <h3>${breed} - ${age} years old</h3>
+              <p>Gender: ${gender}</p>
+              <p>Gets along with dogs: ${dogComp ? "Yes" : "No"}</p>
+              <p>Gets along with cats: ${catComp ? "Yes" : "No"}</p>
+              <p>Gets along with kids: ${kidsComp ? "Yes" : "No"}</p>
+              <p>Comments: ${comments}</p>
+              <p>Owner's name: ${ownerName}</p>
+              <p>Owner's email: ${ownerEmail}</p>
+            `;
+
+                  // Append the pet div to the pets div
+                  petsDiv.appendChild(petDiv);
+                });
+              } else {
+                // Display a message if no pets were found
+                petsDiv.innerHTML =
+                  "<p>No pets found matching your criteria.</p>";
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              petsDiv.innerHTML =
+                "<p>An error occurred while searching for pets.</p>";
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

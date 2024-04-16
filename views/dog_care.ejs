@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fynn Gnugesser Website</title>
+    <link rel="stylesheet" type="text/css" href="dog_care.css" />
+  </head>
+  <body>
+    <%- include ('partials/header.ejs')%>
+    <div class="all_content">
+      <%- include ('partials/navbar.ejs')%>
+
+      <div class="main_content">
+        <h2>How to Care for Your Dog</h2>
+        <p>
+          Alright, so you have adopted a dog and want to know how you should
+          care for it to give the dog a long and happy life. Here are some
+          general dog care tips!
+        </p>
+        <ul>
+          <li>
+            <strong>Regular Veterinary Care:</strong> Schedule routine check-ups
+            with a veterinarian to monitor your dog's health, vaccinations, and
+            any potential issues early on. Follow their recommendations for
+            vaccinations, deworming, and parasite prevention.
+          </li>
+          <li>
+            <strong>Balanced Diet:</strong> Provide a nutritious and balanced
+            diet suitable for your dog's age, size, and activity level. Consult
+            with your vet to determine the right type and amount of food, and
+            avoid feeding them table scraps or foods that are toxic to dogs.
+          </li>
+          <li>
+            <strong>Adequate Exercise:</strong> Dogs need regular exercise to
+            stay healthy and happy. Provide daily walks, play sessions, or other
+            activities that stimulate both their mind and body. Adjust the
+            intensity and duration of exercise based on your dog's breed and
+            fitness level.
+          </li>
+          <li>
+            <strong>Proper Hydration:</strong> Always keep fresh water available
+            for your dog, especially during hot weather or after physical
+            activity. Monitor their water intake to ensure they stay hydrated.
+          </li>
+          <li>
+            <strong>Training and Socialization:</strong> Invest time in training
+            your dog with basic commands like sit, stay, and come, which helps
+            establish good behavior and strengthens your bond. Socialize them
+            with other dogs and people to prevent aggression and fearfulness.
+          </li>
+          <li>
+            <strong>Grooming Routine:</strong> Regular grooming is essential to
+            maintain your dog's coat, skin, and overall hygiene. Brush their
+            fur, trim nails, clean ears, and brush teeth regularly to prevent
+            dental issues.
+          </li>
+          <li>
+            <strong>Safe Environment:</strong> Create a safe and comfortable
+            living space for your dog, including a cozy bed, toys for mental
+            stimulation, and secure fencing or leashes to prevent accidents or
+            escapes.
+          </li>
+        </ul>
+        <div id="links">
+          <p>
+            If you want more resources regarding dog care, here are some useful
+            websites to check out: <br />
+            <a
+              href="https://www.aspca.org/pet-care/dog-care/general-dog-care"
+              target="_blank"
+              >https://www.aspca.org/pet-care/dog-care/general-dog-care</a
+            >
+            <br />
+            <a
+              href="https://www.forbes.com/advisor/ca/pet-insurance/dog-care-tips/"
+              target="_blank"
+              >https://www.forbes.com/advisor/ca/pet-insurance/dog-care-tips/</a
+            >
+            <br />
+            <a
+              href="https://www.pawlicy.com/blog/dog-care-tips/"
+              target="_blank"
+              >https://www.pawlicy.com/blog/dog-care-tips/</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+    <%- include ('partials/footer.ejs')%>
+    <script src="logoutButton.js"></script>
+    <%- include ('partials/logoutCheck.ejs')%>
+  </body>
+</html>

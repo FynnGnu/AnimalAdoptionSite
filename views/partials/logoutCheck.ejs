@@ -1,0 +1,11 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("/isLoggedIn")
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.loggedIn) {
+          insertLogoutButton();
+        }
+      });
+  });
+</script>

@@ -1,0 +1,190 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ddd;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+   
+.container {
+    display: flex;
+    flex-direction: row; /* This is the default direction, but it's good to be explicit */
+    justify-content: space-between; /* Adjusts spacing between navbar and main content */
+    align-items: flex-start; /* Aligns items to the top */
+   }
+
+.top_header {
+    margin-bottom: 7vh;
+    display: flex;
+    align-items: center;
+}
+
+.top_header img {
+    margin-right: 2vw;
+    width: 200px;
+
+}
+
+.top_header h1 {
+    font-size: 45px;
+
+}
+
+.all_content {
+    display: flex;
+}
+
+.navbar {
+    flex-direction: column;
+}
+
+.navbar ul, #logoutButton {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border-right: 2px solid white;
+    overflow: hidden;
+}
+
+.navbar ul li, #logoutButton {
+    font-size: 23px;
+    text-align: center;
+    padding: 10px;
+}
+
+.navbar ul li a, #logoutButton {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 20px 0;
+    text-decoration: none;
+    width: 200px;
+    box-sizing: border-box;
+    border: 3px solid transparent;
+
+}
+
+.navbar ul li a:hover, #logoutButton:hover {
+    background-color: lavender;
+    color: black;
+}
+
+#logoutButton {
+    background-color: #ddd;
+}
+
+.main_content {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 5vw 0 5vw;
+    width: 1150px;
+    min-width: 500px;
+}
+
+.main_content h2 {
+    text-align: center;
+}
+  
+.main_content form {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main_content label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  select,
+  input[type="text"],
+  input[type="password"],
+  textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .main_content button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: blue;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .main_content button[type="reset"] {
+    background-color: red;
+  }
+  
+  .main_content button:hover {
+    background-color: #007bff;
+  }
+  
+  .main_content button[type="reset"]:hover {
+    background-color: #c82333;
+  }
+
+  footer a {
+    font-size: large;
+    text-align: left;
+    margin-left: 20px;
+}
+
+footer a {
+    text-decoration: none;
+    color: black;
+    transition: color 0.2s;
+}
+
+footer a:hover {
+    color: #0056b3;
+}
+
+footer a:active {
+    color: #003f7f;
+}
+
+footer {
+    height: 70px;
+    background-color: rgb(162, 196, 151);
+    margin-top: auto;
+}
+
+
+#clock {
+    margin-left: auto;
+    margin-right: 5vw;
+    font-size: 20px;
+}
+
+
+#create_account {
+    text-decoration: none;
+    color: black;
+    transition: color 0.2s;
+}
+
+#create_account:hover {
+    color: #0056b3;
+}
+
+#create_account:active {
+    color: #003f7f;
+}
+
+
+#loginFormResponse {
+    color: blue;
+}

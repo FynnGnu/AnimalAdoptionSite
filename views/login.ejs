@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fynn Gnugesser Website</title>
+    <link rel="stylesheet" type="text/css" href="login.css" />
+  </head>
+  <body>
+    <%- include ('partials/header.ejs')%>
+    <div class="all_content">
+      <%- include ('partials/navbar.ejs')%>
+      <div class="main_content">
+        <h2>Login Form</h2>
+        <form id="loginForm">
+          <label for="username">Username: <br />(letters and numbers)</label>
+          <input type="text" id="username" name="username" required />
+          <br />
+          <label for="password"
+            >Password: <br />
+            (4+ digits long, letters and numbers, at least one letter and one
+            number)</label
+          >
+          <input type="password" id="password" name="password" required />
+          <br />
+          <button type="submit" onclick="checkIfExists(event)">Login</button>
+
+          <br />
+          <br />
+          <a id="create_account" href="/create_account"
+            >Don't have an account? Click here to register</a
+          >
+          <br /><br />
+          <div id="loginFormResponse"><br /></div>
+        </form>
+      </div>
+    </div>
+    <%- include ('partials/footer.ejs')%>
+    <script src="validateFormat.js"></script>
+    <script src="logoutButton.js"></script>
+    <script>
+      function checkIfExists(event) {
+        event.preventDefault();
+        const form = document.getElementById("loginForm");
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const validationResult = validateFormat(username, password);
+        if (!validationResult.success) {
+          document.getElementById("loginFormResponse").innerHTML =
+            validationResult.message;
+          return;
+        }
+
+        fetch("/checkIfExists", {
+          method: "POST",
+          body: new URLSearchParams(new FormData(form)),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            document.getElementById("loginFormResponse").innerHTML =
+              result.message;
+            if (result.success) {
+              form.reset();
+              insertLogoutButton();
+            }
+          });
+      }
+    </script>
+    <%- include ('partials/logoutCheck.ejs') %>
+    <script>
+      // Function to display the logout message from session storage
+      function displayLogoutMessage() {
+        const logoutMessage = sessionStorage.getItem("logoutMessage");
+        if (logoutMessage) {
+          document.getElementById("loginFormResponse").innerHTML =
+            logoutMessage;
+          // Clear the message from session storage
+          sessionStorage.removeItem("logoutMessage");
+        }
+      }
+
+      // Call the function to display the message
+      displayLogoutMessage();
+    </script>
+  </body>
+</html>
