@@ -210,7 +210,7 @@ async function addToAvailablePetInfo(type, breed, age, gender, dogComp, catComp,
        }
      }
 
-     breed = breed.toLowerCase();
+     breed = toLowerCase(breed);
 
      catComp = catComp === undefined ? false: true;
      dogComp = dogComp === undefined ? false: true;
