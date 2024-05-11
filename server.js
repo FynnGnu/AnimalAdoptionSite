@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
 const readline = require('readline');
-const session = require('express-session'); // Import express-session
+const session = require('cookie-session');
 
 const app = express(); // Define 'app' before using it
 
