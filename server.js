@@ -153,11 +153,14 @@ app.post("/validateInput", async (req, res) => { // Make the route handler async
    });
 
    app.get("/logout", (req, res) => {
+    console.log('Logout route accessed');
+    console.log('Session before logout:', req.session);
     req.session = null; 
     res.clearCookie('connect.sid');
+    console.log('Session after logout:', req.session);
     res.redirect("/login");
-  });
-  
+});
+
 
 app.get("/isLoggedIn", (req, res) => {
     if (req.session.username) {
