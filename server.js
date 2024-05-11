@@ -78,7 +78,7 @@ app.post("/findPets", async (req, res) => {
          ownerEmail
        };
      });
- 
+
      const filteredPets = pets.filter(pet => {
        const {
          type,
@@ -92,18 +92,18 @@ app.post("/findPets", async (req, res) => {
        if (type && pet.type.toLowerCase() !== type.toLowerCase()) matches = false;
        if (breed && breed !== 'any' && pet.breed !== breed) matches = false;
        if (gender && gender !== 'any' && pet.gender !== gender) matches = false;
- 
-       // Adjusted age filter logic
-       if (ageFilter.young && !(pet.age >= 0 && pet.age <= 2)) matches = false;
-       if (ageFilter.adult && !(pet.age >= 3 && pet.age <= 8)) matches = false;
-       if (ageFilter.senior && !(pet.age >= 9)) matches = false;
- 
+       if (ageFilter.young && !(age >= 0 && age <= 2)) matches = false;
+       if (ageFilter.adult && !(age >= 3 && age <= 8)) matches = false;
+       if (ageFilter.senior && !(age >= 9)) matches = false;
+
        if (compatibility.dogs === true && !pet.dogComp) matches = false;
        if (compatibility.cats === true && !pet.catComp) matches = false;
        if (compatibility.children === true && !pet.kidsComp) matches = false;
- 
+
        return matches;
      });
+     console.log("Filtered");
+
  
      res.json(filteredPets);
   } catch (error) {
