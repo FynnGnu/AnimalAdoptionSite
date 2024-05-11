@@ -17,10 +17,9 @@ app.use(express.static(path.join(__dirname, 'public'))); // Serve static files f
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: 'your_secret_key', // Replace 'your_secret_key' with a secret string
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false } // Set to true if you're using HTTPS
+    name: 'session',
+    keys: ['091283'],
+    maxAge: 24 * 60 * 60 * 1000
 }));
 app.use(express.json());
 
@@ -154,14 +153,11 @@ app.post("/validateInput", async (req, res) => { // Make the route handler async
    });
 
    app.get("/logout", (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            return res.redirect("/login");
-        }
-        res.clearCookie('connect.sid'); // Clear the session cookie
-        res.redirect("/login"); // Redirect to the login page
-    });
-});
+    req.session = null; 
+    res.clearCookie('connect.sid');
+    res.redirect("/login");
+  });
+  
 
 app.get("/isLoggedIn", (req, res) => {
     if (req.session.username) {
